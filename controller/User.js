@@ -358,9 +358,9 @@ export const deleteYoutube = async (req, res) => {
     const { id } = req.params;
 
     const user = await User.findById(req.user._id);
-    const video = user.youtube.find((item) => item._id === id);
+    const video = user.youtube.find((item) => item._id == id);
     await cloudinary.v2.uploader.destroy(video.image.public_id);
-    user.youtube = user.youtube.filter((item) => item._id !== id);
+    user.youtube = user.youtube.filter((item) => item._id != id);
 
     await user.save();
 
@@ -368,7 +368,7 @@ export const deleteYoutube = async (req, res) => {
       success: true,
       message: "Deleted from Youtube",
     });
-  } catch (err) {
+  } catch (err) { 
     res.status(400).json({
       message: err.message,
       success: false,
@@ -382,11 +382,11 @@ export const deleteProject = async (req, res) => {
 
     const user = await User.findById(req.user._id);
 
-    const project = user.projects.find((item) => item._id === id);
+    const project = user.projects.find((item) => item._id == id);
 
     await cloudinary.v2.uploader.destroy(project.image.public_id);
 
-    user.project = user.projects.filter((item) => item._id !== id);
+    user.projects = user.projects.filter((item) => item._id != id);
 
     await user.save();
 

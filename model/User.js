@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     {
       title: String,
       description: String,
-      date: Date,
+      date: {type: Date , default: Date.now}
     },
   ],
 
@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema({
         url: String,
       },
       description: String,
-      techStacks: String,
+      techStack: String,
     },
   ],
 
