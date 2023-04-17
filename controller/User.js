@@ -101,7 +101,7 @@ export const contact = async (req, res) => {
       message: "Message Sent Successfully",
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       message: err.message,
       success: false,
     });

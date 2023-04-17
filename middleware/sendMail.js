@@ -15,6 +15,8 @@ export const sendMail = async (userMessage) => {
     subject:"CONTACT REQUEST FROM PORTFOLIO",
     to:process.env.MYMAIL,
     from:process.env.MYMAIL,
-    userMessage,
-  })
+    text:userMessage,
+  });
+
+  // console.log("sent successfully");
 };
