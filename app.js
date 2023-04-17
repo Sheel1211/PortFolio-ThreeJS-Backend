@@ -14,7 +14,7 @@ import {userRouter} from "./routes/User.js";
 app.use("/api/v1",userRouter);
 
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: ['http://localhost:3000', 'https://sheelpandya.netlify.app']
 }
 
 app.use(cors(corsOptions));
