@@ -12,7 +12,7 @@ app.use(cookieParser());
 import {userRouter} from "./routes/User.js";
 app.use("/api/v1",userRouter);
 
-const cors = require('cors');
+import cors from "cors";
 app.use(cors({
     origin: '*'
 }));
