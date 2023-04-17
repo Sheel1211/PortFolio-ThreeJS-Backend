@@ -6,5 +6,6 @@ export const connectDatabase=()=>{
     })
     .catch((e)=>{
         console.log(e);
+        console.log("Database not connected");
     })
 }
