@@ -13,13 +13,14 @@ app.use(cookieParser());
 import {userRouter} from "./routes/User.js";
 app.use("/api/v1",userRouter);
 
-app.use(cors({
-    origin: '*',
-    methods: '*'
-  }));
+const corsOptions = {
+  origin: 'http://localhost:3000'
+}
 
-app.use(express.static(path.resolve("/frontend/build")));
+app.use(cors(corsOptions));
+
+app.use(express.static(path.resolve("../frontend/build")));
 
 app.get("*",(req,res)=>{
-    res.sendFile(path.resolve("/frontend/build/index.html"));
+    res.sendFile(path.resolve("../frontend/build/index.html"));
 })
