@@ -21,6 +21,8 @@ export const login = async (req, res) => {
       .status(200)
       .cookie("token", token, {
         expires: new Date(Date.now() + 10 * 60 * 1000),
+        httpOnly: false,
+        secure: false,       
         
       })
       .json({
@@ -41,7 +43,8 @@ export const logout = async (req, res) => {
       .status(200)
       .cookie("token", null, {
         expires: new Date(Date.now()),
-    
+        httpOnly: false,
+        secure: false,
       })
       .json({
         success: true,
@@ -99,7 +102,7 @@ export const contact = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Message Sent Successfully",
-    });
+    }); 
   } catch (err) {
     return res.status(400).json({
       message: err.message,
@@ -193,8 +196,8 @@ export const updateUser = async (req, res) => {
     }
 
     if (about) {
-      if(about.name){
-        
+      
+      if(about.name){        
         user.about.name = about.name;
       }
       if(about.title)
@@ -209,9 +212,10 @@ export const updateUser = async (req, res) => {
       {
         user.about.description = about.description;
       }
-      if(about.quote)
+      if(about.quotes)
       {
-        user.about.quote = about.quote;
+        user.about.quotes = about.quotes;
+        // console.log(1234);
       }
 
       if (about.avatar) {
@@ -243,13 +247,24 @@ export const updateUser = async (req, res) => {
 
 export const addTimeline = async (req, res) => {
   try {
-    const { title, description, date } = req.body;
+    const { title, description,image, date } = req.body;
 
     const user = await User.findById(req.user._id);
+    // console.log(user);
+
+    // console.log("Here is obtained image backend =>  " + image);
+
+    const myCloud = await cloudinary.v2.uploader.upload(image, {
+      folder: "portfolio",
+    });
 
     user.timeline.unshift({
       title,
       description,
+      image: {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      },
       date,
     });
 
@@ -288,7 +303,7 @@ export const addYoutube = async (req, res) => {
     await user.save();
     res.status(200).json({
       success: true,
-      message: "Added to youtube",
+      message: "Added to Certificates",
     });
   } catch (err) {
     res.status(400).json({
@@ -366,7 +381,7 @@ export const deleteYoutube = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Deleted from Youtube",
+      message: "Deleted from Certificates",
     });
   } catch (err) { 
     res.status(400).json({

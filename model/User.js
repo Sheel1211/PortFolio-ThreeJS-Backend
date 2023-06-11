@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
     {
       title: String,
       description: String,
-      date: {type: Date , default: Date.now}
+      image: {
+        public_id: String,
+        url: String,
+      },
+      date: { type: Date, default: Date.now },
     },
   ],
 
