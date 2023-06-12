@@ -6,7 +6,7 @@ import cloudinary from "cloudinary";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    console.log("Login request received");
     const user = await User.findOne({ email, password });
 
     if (!user) {
