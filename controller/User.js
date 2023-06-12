@@ -6,7 +6,7 @@ import cloudinary from "cloudinary";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login request received");
+
     const user = await User.findOne({ email, password });
 
     if (!user) {
@@ -21,13 +21,15 @@ export const login = async (req, res) => {
       .status(200)
       .cookie("token", token, {
         expires: new Date(Date.now() + 10 * 60 * 1000),
-        httpOnly: false,
-        secure: false,       
+        httpOnly: true,
+        secure: true,      
+        sameSite:'none',
         
       })
       .json({
         success: true,
         message: "Logged In Successfully",
+        token
       });
   } catch (error) {
     return res.status(400).json({
@@ -114,7 +116,7 @@ export const contact = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    console.log(user);
+    // console.log(user);
     const { name, email, password, skills, about } = req.body;
 
     if (name) {
