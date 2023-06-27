@@ -21,7 +21,12 @@ const userSchema = new mongoose.Schema({
         public_id: String,
         url: String,
       },
-      date: { type: Date, default: Date.now },
+      startDate: { type: Date, default: Date.now },
+      endDate: { type: Date, default: Date.now },
+      currentlyWorking:{
+        type:Boolean,
+        default:false,
+      }
     },
   ],
 

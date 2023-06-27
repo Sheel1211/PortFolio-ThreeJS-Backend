@@ -249,7 +249,7 @@ export const updateUser = async (req, res) => {
 
 export const addTimeline = async (req, res) => {
   try {
-    const { title, description,image, date } = req.body;
+    const { title, description,image, startDate , endDate } = req.body;
 
     const user = await User.findById(req.user._id);
     // console.log(user);
@@ -259,7 +259,15 @@ export const addTimeline = async (req, res) => {
     const myCloud = await cloudinary.v2.uploader.upload(image, {
       folder: "portfolio",
     });
+    let eDate=endDate;
+    let currentlyWorking=false;
+    if(endDate==="Present"){
+      currentlyWorking=true;
+      eDate=Date.now();
+    }
+    else currentlyWorking=false;
 
+    
     user.timeline.unshift({
       title,
       description,
@@ -267,7 +275,9 @@ export const addTimeline = async (req, res) => {
         public_id: myCloud.public_id,
         url: myCloud.secure_url,
       },
-      date,
+      startDate,
+      endDate:eDate,
+      currentlyWorking
     });
 
     await user.save();
